@@ -4,7 +4,7 @@ from fastapi import APIRouter
 from fastapi.responses import RedirectResponse
 from sqlmodel import select
 
-from db import SessionDep, SessionRedis, UrlTable
+from db import ResponsePostUrl, SessionDep, SessionRedis, UrlTable
 
 router = APIRouter(prefix="/url", tags=["URL"])
 
@@ -23,3 +23,10 @@ async def get_url(short_url: str, rdb_session: SessionDep, rdis_session: Session
             return str(e)
     else:
         return "Not Found"
+
+
+@router.post("/", response_model=ResponsePostUrl)
+async def post_url(long_url: str, rdb_session: SessionDep) -> ResponsePostUrl:
+    # 1. long_url이 있는지 없는지 체크하고 있으면 반환
+    # 2. 없으면 새로운 short_url을 생성하고 DB및 Redis에 저장하고 short_url을 반환
+    ...

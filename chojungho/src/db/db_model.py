@@ -15,4 +15,5 @@ class Url(UrlBase, table=True):
 
 
 class ResponsePostUrl(UrlBase):
+    url_id: int
     short_url: str
