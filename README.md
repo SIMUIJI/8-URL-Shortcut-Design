@@ -61,7 +61,7 @@ url_id serial4 **NOT** **NULL**,
 ## 단축 해시함수
 
 - hash value 길이는 7로
-- CRC32, MD5, SHA-1 같은 해시함수를 이용ㄴ
+- CRC32, MD5, SHA-1 같은 해시함수를 이용
 - 해시 후 충돌 해소전략 or base-62변환 방법중 하나 선택하여 진행
 
 ---
