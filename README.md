@@ -52,9 +52,9 @@ url_id serial4 **NOT** **NULL**,
 
 );
 
-**CREATE** **INDEX** ix_url_long_url **ON** url **USING** btree (long_url);
+**CREATE** **INDEX** idx_url_long_url **ON** url **USING** btree (long_url);
 
-**CREATE** **INDEX** ix_url_short_url **ON** url **USING** btree (short_url);
+**CREATE** **INDEX** idx_url_short_url **ON** url **USING** btree (short_url);
 
 ---
 
