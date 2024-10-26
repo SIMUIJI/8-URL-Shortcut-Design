@@ -58,11 +58,14 @@ url_id serial4 **NOT** **NULL**,
 
 ---
 
-## 단축 해시함수
+## url 단축 기법
 
 - hash value 길이는 7로
-- CRC32, MD5, SHA-1 같은 해시함수를 이용
-- 해시 후 충돌 해소전략 or base-62변환 방법중 하나 선택하여 진행
+- 해시 후 충돌 해소전략 or base62변환 방법중 하나 선택하여 진행
+### 해시 후 충돌 해소전략
+- CRC32, MD5, SHA-1 등 해시함수적용후 앞7자리만 저장한다 만약 충돌시 사전에 입력한 문자열을 더해서 저장한다
+### base62변환 전략
+- url을 유일생성ID로 변환한뒤 base62를 이용하여 인코딩해준다 예를들어 https://en.wikipedia.org/wiki/Systems_design 이라고 url이 있으면 유일 ID생성기로 반환하면 2009215674938이 되겠고 base62로 변환하면 zn9edcu가 된다.
 
 ---
 
