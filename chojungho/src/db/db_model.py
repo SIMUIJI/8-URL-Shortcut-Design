@@ -12,8 +12,3 @@ class UrlBase(SQLModel):
 
 class Url(UrlBase, table=True):
     url_id: int | None = Field(default=None, primary_key=True)
-
-
-class ResponsePostUrl(UrlBase):
-    url_id: int
-    short_url: str

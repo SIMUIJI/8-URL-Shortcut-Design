@@ -19,7 +19,14 @@ async def create_db_and_tables():
 
 def get_session():
     with Session(engine) as session:
-        yield session
+        try:
+            yield session
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
 
 
 SessionDep = Annotated[Session, Depends(get_session)]
