@@ -41,11 +41,11 @@ func main() {
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, ips)
 	})
-	urlRoute := e.Group("/url")
-	urlRoute.POST("/", db.CreateUrl)
-	urlRoute.GET("/:long_url", db.GetUrl)
-	urlRoute.PUT("/:long_url", db.UpdateUrl)
-	urlRoute.DELETE("/:long_url", db.DeleteUrl)
+	urlRoute := e.Group("/api/v1")
+	urlRoute.POST("/shorten", db.CreateUrl)
+	urlRoute.GET("/:short_url", db.GetUrl)
+	//urlRoute.PUT("/:long_url", db.UpdateUrl)
+	//urlRoute.DELETE("/:long_url", db.DeleteUrl)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))

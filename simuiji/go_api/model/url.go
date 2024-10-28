@@ -3,11 +3,11 @@ package model
 import "time"
 
 type Url struct {
-	ShortUrl string    `json:"short_url"`
-	LongUrl  string    `json:"long_url"`
-	IsEnable int       `json:"is_enable"`
-	RegDate  time.Time `json:"reg_date"`
-	UrlId    int       `json:"url_id" gorm:"primaryKey"`
+	ShortUrl string    `json:"shortUrl"`
+	LongUrl  string    `json:"longUrl"`
+	IsEnable int       `json:"isEnable"`
+	RegDate  time.Time `json:"regDate"`
+	UrlId    int       `json:"urlId" gorm:"primaryKey"`
 }
 
 func (Url) TableName() string {

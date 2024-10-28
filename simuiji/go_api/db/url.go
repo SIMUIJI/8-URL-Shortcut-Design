@@ -22,9 +22,9 @@ func CreateUrl(c echo.Context) error {
 
 		return c.JSON(http.StatusInternalServerError, data)
 	}
-
+	shortUrl := "test123"
 	url := &model.Url{
-		ShortUrl: b.ShortUrl,
+		ShortUrl: shortUrl,
 		LongUrl:  b.LongUrl,
 		IsEnable: b.IsEnable,
 		RegDate:  time.Now(),
@@ -48,7 +48,7 @@ func CreateUrl(c echo.Context) error {
 	}
 
 	response := map[string]interface{}{
-		"data": b,
+		"shortUrl": shortUrl,
 	}
 
 	return c.JSON(http.StatusOK, response)
@@ -106,38 +106,34 @@ func UpdateUrl(c echo.Context) error {
 
 func GetUrl(c echo.Context) error {
 
-	longUrl := c.Param("long_url")
+	shortUrl := c.Param("short_url")
 	// 키-값 설정
 	rdb := config.Cache()
 	ctx := context.Background()
 
 	// 값 가져오기
-	val, err := rdb.Get(ctx, longUrl).Result()
+	longUrl, err := rdb.Get(ctx, shortUrl).Result()
 	if err != nil {
 		fmt.Println(err)
 	}
-	if val == "" {
+	if longUrl == "" {
 		var url []*model.Url
 		db := config.DB()
-		if res := db.Where("long_url = ?", longUrl).Find(&url); res.Error != nil {
+		if res := db.Where("short_url = ?", shortUrl).Find(&url); res.Error != nil {
 			data := map[string]interface{}{
 				"message": res.Error.Error(),
 			}
 
 			return c.JSON(http.StatusOK, data)
 		}
-		val = url[0].ShortUrl
+		longUrl = url[0].LongUrl
 
-		err = rdb.Set(ctx, longUrl, val, 0).Err()
+		err = rdb.Set(ctx, shortUrl, longUrl, 0).Err()
 		if err != nil {
 			panic(err)
 		}
 	}
-
-	response := map[string]interface{}{
-		"data": val,
-	}
-	return c.JSON(http.StatusOK, response)
+	return c.Redirect(http.StatusMovedPermanently, longUrl)
 }
 
 func DeleteUrl(c echo.Context) error {
