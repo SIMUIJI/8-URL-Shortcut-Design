@@ -1,0 +1,17 @@
+2024-10-26 17:20:12.971 UTC [1] LOG:  starting PostgreSQL 16.4 (Debian 16.4-1.pgdg120+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+2024-10-26 17:20:12.972 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2024-10-26 17:20:12.972 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2024-10-26 17:20:12.979 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2024-10-26 17:20:13.001 UTC [32] LOG:  database system was interrupted; last known up at 2024-10-26 17:19:29 UTC
+2024-10-26 17:20:16.053 UTC [32] LOG:  entering standby mode
+2024-10-26 17:20:16.056 UTC [32] LOG:  starting backup recovery with redo LSN 0/11000060, checkpoint LSN 0/11000098, on timeline ID 1
+2024-10-26 17:20:16.090 UTC [32] LOG:  redo starts at 0/11000060
+2024-10-26 17:20:16.096 UTC [32] LOG:  completed backup recovery with redo LSN 0/11000060 and end LSN 0/11000138
+2024-10-26 17:20:16.096 UTC [32] LOG:  consistent recovery state reached at 0/11000138
+2024-10-26 17:20:16.096 UTC [32] LOG:  invalid record length at 0/12000060: expected at least 24, got 0
+2024-10-26 17:20:16.096 UTC [1] LOG:  database system is ready to accept read-only connections
+2024-10-26 17:20:16.111 UTC [33] LOG:  started streaming WAL from primary at 0/12000000 on timeline 1
+2024-10-26 17:24:10.423 UTC [1] LOG:  received fast shutdown request
+2024-10-26 17:24:10.444 UTC [1] LOG:  aborting any active transactions
+2024-10-26 17:24:10.447 UTC [33] FATAL:  terminating walreceiver process due to administrator command
+2024-10-26 17:24:10.451 UTC [30] LOG:  shutting down

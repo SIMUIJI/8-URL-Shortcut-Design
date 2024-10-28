@@ -1,0 +1,93 @@
+version: "3" # 버전에 따라서 기능이 달라질수 있다고 합니다.
+
+services: # 도커에서 사용하는 컨테이너를 정의
+  load_balancer: #컨테이너 이름 생성
+    image: nginx:stable-bookworm # 컨테이너 이미지
+    restart: always # 언제 재 실행을 시켜줄것에 대한 값이다.
+    tty: true # 터미널 기반 에뮬레이터 동자하게 하는법 -t
+    stdin_open: true # -i 옵션으로 std out 등이 나오게 하는거
+    privileged: true # 권한으로 systemd를 사용하기 위한 권한을 주는것이다.
+    volumes:
+      - ./data/nginx/nginx.conf:/etc/nginx/conf.d/api.conf
+    ports: # 연결할 포트
+      - "8080:80"
+      - "443:443"
+    networks: # 해당 컨테이너의 네트워크
+      network: # 네트워크 이름
+        ipv4_address: 172.19.0.2 # 네트워크 고정 아이피
+
+  api1: #컨테이너 이름 생성
+    image: debian:stable # 컨테이너 이미지
+    restart: always # 언제 재 실행을 시켜줄것에 대한 값이다.
+    tty: true # 터미널 기반 에뮬레이터 동자하게 하는법 -t
+    stdin_open: true # -i 옵션으로 std out 등이 나오게 하는거
+    volumes:
+      - ./api1:/mnt
+    command: "/mnt/main"
+    networks: # 해당 컨테이너의 네트워크
+      network: # 네트워크 이름
+        ipv4_address: 172.19.0.3 # 네트워크 고정 아이피
+
+  api2: #컨테이너 이름 생성
+    image: debian:stable # 컨테이너 이미지
+    restart: always # 언제 재 실행을 시켜줄것에 대한 값이다.
+    tty: true # 터미널 기반 에뮬레이터 동자하게 하는법 -t
+    stdin_open: true # -i 옵션으로 std out 등이 나오게 하는거
+    command: "/mnt/main"
+    volumes:
+      - ./api2:/mnt
+    networks: # 해당 컨테이너의 네트워크
+      network: # 네트워크 이름
+        ipv4_address: 172.19.0.4 # 네트워크 고정 아이피
+
+  master:
+    image: postgres:16.4-bookworm
+    restart: always
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./data/db:/var/lib/postgresql/data/pgdata
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=snj
+    ports:
+      - "25432:5432"
+    networks:
+      network:
+        ipv4_address: 172.19.0.5
+
+  slave:
+    image: postgres:16.4-bookworm
+    restart: always
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./data/db2:/var/lib/postgresql/data/pgdata
+    environment:
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_PASSWORD=snj
+#     "rm -rf /var/lib/postgresql/data/* &&
+#      pg_basebackup -h '172.19.0.5' -D '/var/lib/postgresql/data/pgdata' -U replication -p '5432' -v -R -P -X stream &&
+    ports:
+      - "35432:5432"
+    networks:
+      network:
+        ipv4_address: 172.19.0.6
+  cache:
+    image: redis:7.4.1-bookworm
+    restart: always
+    tty: true
+    stdin_open: true
+    command: redis-server --requirepass snj --port 6379
+    ports:
+        - 6379:6379
+    networks:
+      network:
+        ipv4_address: 172.19.0.7
+
+
+networks: # 네트워크 칸
+  network: # 네트워크 이름
+    external: # 외부의 네트워크를 가져오겠다는 이야기
+      name: myapi # 외부 네트워크 이름
+      # docker network create --gateway 172.19.0.1 --subnet 172.19.0.0/21 myapi

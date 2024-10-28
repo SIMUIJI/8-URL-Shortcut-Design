@@ -1,0 +1,192 @@
+2024-10-26 16:29:27.931 UTC [1] LOG:  starting PostgreSQL 16.4 (Debian 16.4-1.pgdg120+2) on aarch64-unknown-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit
+2024-10-26 16:29:27.932 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2024-10-26 16:29:27.932 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+2024-10-26 16:29:27.942 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+2024-10-26 16:29:27.971 UTC [32] LOG:  database system was shut down at 2024-10-26 16:29:14 UTC
+2024-10-26 16:29:28.020 UTC [1] LOG:  database system is ready to accept connections
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:29:28.028 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:29:28.028 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:29:29.039 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:29:29.039 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:29:30.046 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:29:30.046 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:29:30.046 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:30:30.130 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:30:30.130 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:30:31.152 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:30:31.152 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:30:32.179 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:30:32.179 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:30:32.179 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:31:32.243 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:31:32.243 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:31:33.265 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:31:33.265 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:31:34.284 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:31:34.284 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:31:34.284 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:32:34.365 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:32:34.365 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:32:35.389 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:32:35.389 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:32:36.415 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:32:36.415 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:32:36.415 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:33:36.467 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:33:36.467 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:33:37.492 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:33:37.492 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:33:38.515 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:33:38.515 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:33:38.515 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+2024-10-26 16:34:28.076 UTC [30] LOG:  checkpoint starting: time
+2024-10-26 16:34:28.281 UTC [30] LOG:  checkpoint complete: wrote 4 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.127 s, sync=0.003 s, total=0.206 s; sync files=3, longest=0.002 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/2000110, redo lsn=0/20000D8
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:34:38.610 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:34:38.610 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:34:39.632 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:34:39.632 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:34:40.660 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:34:40.660 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:34:40.660 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:35:40.730 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:35:40.730 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:35:41.757 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:35:41.757 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:35:42.787 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:35:42.787 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:35:42.787 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+2024-10-26 16:36:05.635 UTC [30] LOG:  checkpoint starting: force wait
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:05.642 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:05.642 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:36:06.038 UTC [30] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.404 s; sync files=0, longest=0.000 s, average=0.000 s; distance=16383 kB, estimate=16383 kB; lsn=0/3000060, redo lsn=0/3000028
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:06.649 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:06.649 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:07.655 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:07.655 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:36:07.655 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:18.302 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:18.302 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:19.306 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:19.306 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:20.310 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:20.310 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:36:20.310 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:20.316 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:20.316 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:21.320 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:21.320 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:36:22.347 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:36:22.347 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:36:22.347 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:37:22.413 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:37:22.413 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:37:23.448 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:37:23.448 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:37:24.476 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:37:24.476 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:37:24.476 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:38:24.573 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:38:24.573 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:38:25.600 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:38:25.600 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:38:26.626 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:38:26.626 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:38:26.626 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:39:26.678 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:39:26.678 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:39:27.712 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:39:27.712 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:39:28.728 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:39:28.728 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:39:28.729 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:40:28.794 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:40:28.794 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:40:29.809 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:40:29.809 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:40:30.832 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:40:30.832 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:40:30.832 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+2024-10-26 16:41:05.145 UTC [30] LOG:  checkpoint starting: time
+2024-10-26 16:41:05.874 UTC [30] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.607 s, sync=0.010 s, total=0.729 s; sync files=6, longest=0.010 s, average=0.002 s; distance=16385 kB, estimate=16385 kB; lsn=0/40004B0, redo lsn=0/4000478
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:30.861 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:30.861 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:31.887 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:31.887 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:32.902 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:32.902 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:41:32.902 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+2024-10-26 16:41:47.899 UTC [1] LOG:  received fast shutdown request
+2024-10-26 16:41:47.904 UTC [1] LOG:  aborting any active transactions
+2024-10-26 16:41:47.905 UTC [132] snj@snj_db FATAL:  terminating connection due to administrator command
+2024-10-26 16:41:47.908 UTC [1] LOG:  background worker "logical replication launcher" (PID 36) exited with exit code 1
+2024-10-26 16:41:47.913 UTC [30] LOG:  shutting down
+2024-10-26 16:41:49.832 UTC [30] LOG:  checkpoint starting: shutdown immediate
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:49.837 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:49.837 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:41:50.279 UTC [30] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.451 s; sync files=0, longest=0.000 s, average=0.000 s; distance=16382 kB, estimate=16384 kB; lsn=0/5000028, redo lsn=0/5000028
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:50.319 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:50.319 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:51.327 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:51.327 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:41:51.327 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:51.343 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:51.343 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:52.359 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:52.359 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:41:52.666 UTC [178] snj@snj_db FATAL:  the database system is shutting down
+2024-10-26 16:41:52.744 UTC [179] snj@snj_db FATAL:  the database system is shutting down
+cp: cannot create regular file '/database/postgres/data/archive/000000010000000000000001': No such file or directory
+2024-10-26 16:41:53.367 UTC [35] LOG:  archive command failed with exit code 1
+2024-10-26 16:41:53.367 UTC [35] DETAIL:  The failed archive command was: test ! -f /database/postgres/data/archive/000000010000000000000001 && cp pg_wal/000000010000000000000001 /database/postgres/data/archive/000000010000000000000001
+2024-10-26 16:41:53.367 UTC [35] WARNING:  archiving write-ahead log file "000000010000000000000001" failed too many times, will try again later
+2024-10-26 16:41:53.384 UTC [1] LOG:  database system is shut down
