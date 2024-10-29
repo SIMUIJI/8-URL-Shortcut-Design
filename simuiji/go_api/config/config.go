@@ -13,6 +13,11 @@ var cache *redis.Client
 
 var e error
 
+func init() {
+	DatabaseInit()
+	CacheInit()
+}
+
 func DatabaseInit() {
 	host := "172.19.0.6"
 	//host := "127.0.0.1"
@@ -20,12 +25,14 @@ func DatabaseInit() {
 	password := "snj"
 	dbName := "snj_db"
 	port := 5432
+	//port := 35432
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta", host, user, password, dbName, port)
 	database, e = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	host = "172.19.0.5"
-	//host = "172.19.0.5"
+	//host = "127.0.0.1"
+	//port = 25432
 	dsn = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta", host, user, password, dbName, port)
 	insertDb, e = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
