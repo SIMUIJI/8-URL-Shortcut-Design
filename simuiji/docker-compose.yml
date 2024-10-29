@@ -20,6 +20,9 @@ services: # 도커에서 사용하는 컨테이너를 정의
     restart: always # 언제 재 실행을 시켜줄것에 대한 값이다.
     tty: true # 터미널 기반 에뮬레이터 동자하게 하는법 -t
     stdin_open: true # -i 옵션으로 std out 등이 나오게 하는거
+    depends_on:
+      - master_db
+      - slave
     volumes:
       - ./api1:/mnt
     command: >
@@ -33,6 +36,9 @@ services: # 도커에서 사용하는 컨테이너를 정의
     restart: always # 언제 재 실행을 시켜줄것에 대한 값이다.
     tty: true # 터미널 기반 에뮬레이터 동자하게 하는법 -t
     stdin_open: true # -i 옵션으로 std out 등이 나오게 하는거
+    depends_on:
+      - master_db
+      - slave
     command: >
       sh -c "/mnt/main"
     volumes:
@@ -41,16 +47,19 @@ services: # 도커에서 사용하는 컨테이너를 정의
       network: # 네트워크 이름
         ipv4_address: 172.19.0.4 # 네트워크 고정 아이피
 
-  master:
+  master_db:
     image: postgres:16.4-bookworm
     restart: always
     tty: true
     stdin_open: true
     volumes:
-      - ./data/db:/var/lib/postgresql/data/pgdata
+      - ./data/db:/mnt
+      - ./data/master_db_script:/docker-entrypoint-initdb.d
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_PASSWORD=snj
+      - POSTGRES_DB=snj_db
+      - POSTGRES_USER=snj
     ports:
       - "25432:5432"
     networks:
@@ -62,13 +71,15 @@ services: # 도커에서 사용하는 컨테이너를 정의
     restart: always
     tty: true
     stdin_open: true
+    depends_on:
+      - master_db
     volumes:
-      - ./data/db2:/var/lib/postgresql/data/pgdata
+      - ./data/slave_db_script:/docker-entrypoint-initdb.d
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_PASSWORD=snj
-#     "rm -rf /var/lib/postgresql/data/* &&
-#      pg_basebackup -h '172.19.0.5' -D '/var/lib/postgresql/data/pgdata' -U replication -p '5432' -v -R -P -X stream &&
+      - POSTGRES_DB=snj_db
+      - POSTGRES_USER=snj
     ports:
       - "35432:5432"
     networks:

@@ -24,7 +24,8 @@ func DatabaseInit() {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta", host, user, password, dbName, port)
 	database, e = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
-	host = "172.19.0.6"
+	host = "172.19.0.5"
+	//host = "172.19.0.5"
 	dsn = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta", host, user, password, dbName, port)
 	insertDb, e = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
