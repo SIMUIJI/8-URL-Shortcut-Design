@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Shortener</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    
+    <h2>Shorten URL</h2>
+    <input type="text" id="longUrl" placeholder="Enter long URL">
+    <button id="shortenBtn">Shorten</button>
+    <p id="shortUrlResult"></p>
+
+    <h2>Get Long URL from Short URL</h2>
+    <input type="text" id="shortUrl" placeholder="Enter short URL">
+    <button id="getLongUrlBtn">Get Long URL</button>
+    <p id="longUrlResult"></p>
+
+    <h2>Toggle URL Status</h2>
+    <input type="text" id="toggleShortUrl" placeholder="Enter short URL to toggle">
+    <button id="toggleUrlBtn">Toggle Status</button>
+    <p id="toggleUrlResult"></p>
+
+    <h2>View All Shortened URLs</h2>
+    <button id="viewAllUrlsBtn">View All URLs</button>
+    <ul id="urlList"></ul>
+
+    <script>
+        // 단축 URL 생성
+        $('#shortenBtn').click(function() {
+            const longUrl = $('#longUrl').val();
+            $.ajax({
+                url: '/api/v1/shorten',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ longUrl: longUrl }),
+                success: function(data) {
+                    $('#shortUrlResult').text('Short URL: ' + data.shortUrl);
+                },
+                error: function(xhr) {
+                    $('#shortUrlResult').text('Error: ' + xhr.responseJSON.error);
+                }
+            });
+        });
+
+        // 긴 URL 조회
+        $('#getLongUrlBtn').click(function() {
+            const shortUrl = $('#shortUrl').val();
+            $.ajax({
+                url: '/api/v1/getLongUrl',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ shortUrl: shortUrl }),
+                success: function(data) {
+                    $('#longUrlResult').text('Long URL: ' + data.longUrl);
+                },
+                error: function(xhr) {
+                    $('#longUrlResult').text('Error: ' + xhr.responseJSON.error);
+                }
+            });
+        });
+
+        // URL 상태 토글
+        $('#toggleUrlBtn').click(function() {
+            const shortUrl = $('#toggleShortUrl').val();
+            $.ajax({
+                url: '/api/v1/toggleUrl/' + shortUrl,
+                type: 'PUT',
+                success: function(data) {
+                    $('#toggleUrlResult').text('Status toggled for: ' + data.shortUrl + ' to ' + (data.newStatus ? 'enabled' : 'disabled'));
+                },
+                error: function() {
+                    $('#toggleUrlResult').text('URL not found');
+                }
+            });
+        });
+
+        // 모든 URL 조회
+        $('#viewAllUrlsBtn').click(function() {
+            $.get('/api/v1/urls', function(data) {
+                $('#urlList').empty();  // 기존 리스트 초기화
+                data.forEach(url => {
+                    $('#urlList').append(`<li>${url[0]} -> ${url[1]} (Enabled: ${url[2]})</li>`); // short_url -> long_url
+                });
+            });
+        });
+    </script>
+</body>
+</html>
