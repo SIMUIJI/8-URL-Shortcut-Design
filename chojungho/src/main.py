@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 
 from api import url_router
+from constants import HOST
 from db import create_db_and_tables
 
 app: FastAPI = FastAPI()
@@ -43,4 +44,4 @@ def create_app(_app) -> FastAPI:
 app = create_app(app)
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=5959, reload=True, access_log=False)
+    uvicorn.run("main:app", host=HOST, port=5959, reload=True, access_log=False)

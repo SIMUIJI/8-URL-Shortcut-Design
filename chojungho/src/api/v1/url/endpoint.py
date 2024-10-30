@@ -5,18 +5,19 @@ from fastapi import APIRouter
 from fastapi.responses import JSONResponse, RedirectResponse
 from sqlmodel import select
 
-from db import SessionDep, SessionRedis, UrlTable
+from constants import HOST
+from db import PgpoolSssionDep, SessionRedis, UrlTable
 
 from .model import RequstPostUrl, ResponsePostUrl
 
 router = APIRouter(prefix="/url", tags=["URL"])
 
 
-@router.get("/")
-async def get_url(short_url: str, rdb_session: SessionDep, redis_session: SessionRedis):
+@router.get("/{short_url}")
+async def get_url(short_url: str, rdb_session: PgpoolSssionDep, redis_session: SessionRedis):
     if url_cache_info := await redis_session.get(f"{short_url}"):
         url_cache_info = json.loads(url_cache_info)
-        return RedirectResponse(url_cache_info["long_url"], status_code=302)
+        return RedirectResponse(url_cache_info["long_url"], status_code=301)
     else:
         try:
             long_url = rdb_session.exec(select(UrlTable).where(UrlTable.short_url == short_url)).first().long_url
@@ -30,15 +31,17 @@ async def get_url(short_url: str, rdb_session: SessionDep, redis_session: Sessio
 
 
 @router.post("/", response_model=ResponsePostUrl)
-async def post_url(url_info: RequstPostUrl, rdb_session: SessionDep, redis_session: SessionRedis):
+async def post_url(url_info: RequstPostUrl, rdb_session: PgpoolSssionDep, redis_session: SessionRedis):
     try:
         short_url = rdb_session.exec(select(UrlTable).where(UrlTable.long_url == url_info.long_url)).first().short_url
-        return JSONResponse(content={"message": f"이미 존재하는 URL입니다.\n단축URL : {short_url}"}, status_code=200)
+        return JSONResponse(content={"message": f"이미 존재하는 URL입니다.\n단축URL : {short_url}"})
     except AttributeError:
         redis_unq_id = await redis_session.incr("url_shortener_id")
         short_url = base62.encode(redis_unq_id)
         rdb_session.add(UrlTable(url_id=redis_unq_id, short_url=short_url, long_url=url_info.long_url))
         await redis_session.set(f"{short_url}", json.dumps({"long_url": url_info.long_url, "ex": 604800}), ex=604800)
-        return JSONResponse(content={"message": f"등록되었습니다.\n단축URL : {short_url}"}, status_code=200)
+        return JSONResponse(
+            content={"message": f"등록되었습니다.\n단축URL : {'http://'+HOST+':8080/api/v1/url/'+short_url}"}
+        )
     except Exception as e:
         return JSONResponse(content={"message": f"Server Error\n{e}"}, status_code=500)

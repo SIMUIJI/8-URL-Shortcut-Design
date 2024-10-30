@@ -18,5 +18,7 @@
 - url단축(post) 요청이오면 redis의 auto increment값을 1올려주고 rdb에 pk값을 해당 auto increment한 값으로 저장하고 short_url에는 base62로 변환한 값을 저장한다.
 - ex : post로 url "https://www.naver.com/" 요청이오면 redis의 auto increment값은 1이되고 1을 base62로 변환하면 1이된다 그러면 short_url과 url_id에는 각각 1을넣어준다. 그리고 또다른 url post로 요청시 auto incremen값은 증가하고 증가한값에 base62를 적용한값들을 rdb에 저장한다.
 
-
-
+docker network create --subnet=172.18.0.0/16 url-service-network
+docker-compose -f db-compose.yml up -d
+docker-compose --env-file ./src/.env -f app-compose.yml up -d
+docker network prune

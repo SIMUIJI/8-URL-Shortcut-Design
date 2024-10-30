@@ -1,0 +1,93 @@
+version: '3.8'
+
+networks:
+  url-service-network:
+    external: true
+
+services:
+  master-pg-0:
+    image: bitnami/postgresql-repmgr:14
+    ports:
+      - "5445:5432"
+    volumes:
+      - pg_0_data:/bitnami/postgresql
+    environment:
+      - POSTGRESQL_POSTGRES_PASSWORD=ssrinc!123
+      - POSTGRESQL_USERNAME=cjh
+      - POSTGRESQL_PASSWORD=ssrinc!123
+      - POSTGRESQL_DATABASE=postgres
+      - REPMGR_PASSWORD=ssrinc!123
+      - REPMGR_PRIMARY_HOST=master-pg-0
+      - REPMGR_PARTNER_NODES=master-pg-0,slave-pg-1
+      - REPMGR_NODE_NAME=master-pg-0
+      - REPMGR_NODE_NETWORK_NAME=master-pg-0
+    networks:
+      url-service-network:
+        ipv4_address: 172.18.0.2
+
+  slave-pg-1:
+    image: bitnami/postgresql-repmgr:14
+    ports:
+      - "5446:5432"
+    volumes:
+      - pg_1_data:/bitnami/postgresql
+    environment:
+      - POSTGRESQL_POSTGRES_PASSWORD=ssrinc!123
+      - POSTGRESQL_USERNAME=cjh
+      - POSTGRESQL_PASSWORD=ssrinc!123
+      - POSTGRESQL_DATABASE=postgres
+      - REPMGR_PASSWORD=ssrinc!123
+      - REPMGR_PRIMARY_HOST=master-pg-0
+      - REPMGR_PARTNER_NODES=master-pg-0,slave-pg-1
+      - REPMGR_NODE_NAME=slave-pg-1
+      - REPMGR_NODE_NETWORK_NAME=slave-pg-1
+    networks:
+      url-service-network:
+        ipv4_address: 172.18.0.3
+
+  pgpool:
+    image: bitnami/pgpool:4
+    ports:
+      - "5437:5432"
+    environment:
+      - PGPOOL_BACKEND_NODES=0:172.18.0.2:5432,1:172.18.0.3:5432
+      - PGPOOL_SR_CHECK_USER=cjh
+      - PGPOOL_SR_CHECK_PASSWORD=ssrinc!123
+      - PGPOOL_ENABLE_LDAP=no
+      - PGPOOL_POSTGRES_USERNAME=postgres
+      - PGPOOL_POSTGRES_PASSWORD=ssrinc!123
+      - PGPOOL_ADMIN_USERNAME=admin
+      - PGPOOL_ADMIN_PASSWORD=ssrinc!123
+    networks:
+      url-service-network:
+        ipv4_address: 172.18.0.4
+    healthcheck:
+      test: ["CMD", "/opt/bitnami/scripts/pgpool/healthcheck.sh"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7.4.1
+    command: redis-server --requirepass redis!123
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6377:6379"
+    networks:
+      url-service-network:
+        ipv4_address: 172.18.0.5
+    restart: always
+
+volumes:
+  pg_0_data:
+    driver: local
+  pg_1_data:
+    driver: local
+  redis_data:
+    driver: local

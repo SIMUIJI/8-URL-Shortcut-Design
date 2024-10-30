@@ -7,18 +7,21 @@ from sqlmodel import Session, SQLModel, create_engine
 
 load_dotenv()
 
-engine = create_engine(
-    f"postgresql://{os.environ.get('POSTGRES_USER')}:"
-    f"{os.environ.get('POSTGRES_PASSWORD')}@{os.environ.get('POSTGRES_SERVER')}"
+pg_engine = create_engine(
+    f"postgresql://{os.environ.get('PGPOOL_USER')}:"
+    f"{os.environ.get('PGPOOL_PASSWORD')}@"
+    f"{os.environ.get('PGPOOL_HOST')}:"
+    f"{os.environ.get('PGPOOL_PORT')}/"
+    f"{os.environ.get('PGPOOL_NAME')}"
 )
 
 
 async def create_db_and_tables():
-    SQLModel.metadata.create_all(engine)
+    SQLModel.metadata.create_all(pg_engine)
 
 
-def get_session():
-    with Session(engine) as session:
+def get_pgpool_session():
+    with Session(pg_engine) as session:
         try:
             yield session
             session.commit()
@@ -29,4 +32,4 @@ def get_session():
             session.close()
 
 
-SessionDep = Annotated[Session, Depends(get_session)]
+PgpoolSssionDep = Annotated[Session, Depends(get_pgpool_session)]
