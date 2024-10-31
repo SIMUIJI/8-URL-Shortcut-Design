@@ -19,6 +19,9 @@
 - ex : post로 url "https://www.naver.com/" 요청이오면 redis의 auto increment값은 1이되고 1을 base62로 변환하면 1이된다 그러면 short_url과 url_id에는 각각 1을넣어준다. 그리고 또다른 url post로 요청시 auto incremen값은 증가하고 증가한값에 base62를 적용한값들을 rdb에 저장한다.
 ----
 # 실행방법
+## env 설정
+- src폴더에 있는 .env.example파일을 복사하여 .env파일을 만들어주고 값을넣어준다.
+
 ## 도커 네트워크
 - 도커 네트워크를만들어준다 명령어 : docker network create --subnet=172.18.0.0/16 url-service-network
 
