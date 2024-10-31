@@ -1,4 +1,4 @@
-package cmd
+package myip
 
 import (
 	"api/go_api/internal"

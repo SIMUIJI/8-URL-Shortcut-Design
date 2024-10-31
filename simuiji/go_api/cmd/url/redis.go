@@ -1,4 +1,4 @@
-package db
+package url
 
 import (
 	"api/go_api/config"

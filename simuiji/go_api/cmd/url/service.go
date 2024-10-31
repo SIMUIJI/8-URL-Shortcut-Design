@@ -1,14 +1,12 @@
-package cmd
+package url
 
 import (
-	"api/go_api/db"
-	"api/go_api/model"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
 
 func CreateUrl(c echo.Context) error {
-	b := new(model.Url)
+	b := new(Url)
 	if err := c.Bind(b); err != nil {
 		data := map[string]interface{}{
 			"message": err.Error(),
@@ -16,14 +14,14 @@ func CreateUrl(c echo.Context) error {
 
 		return c.JSON(http.StatusInternalServerError, data)
 	}
-	shortUrl, err := db.Create(b)
+	shortUrl, err := Create(b)
 	if err != nil {
 		data := map[string]interface{}{
 			"message": err.Error(),
 		}
 		return c.JSON(http.StatusInternalServerError, data)
 	}
-	db.InsertRedis(b.ShortUrl, b.LongUrl)
+	InsertRedis(b.ShortUrl, b.LongUrl)
 
 	response := map[string]interface{}{
 		"shortUrl": shortUrl,
@@ -35,17 +33,17 @@ func CreateUrl(c echo.Context) error {
 func GetUrl(c echo.Context) error {
 	var err error
 	shortUrl := c.Param("short_url")
-	longUrl := db.GetRedisByKey(shortUrl)
+	longUrl := GetRedisByKey(shortUrl)
 
 	if longUrl == "" {
-		longUrl, err = db.Get(shortUrl)
+		longUrl, err = Get(shortUrl)
 		if err != nil {
 			data := map[string]interface{}{
 				"message": err,
 			}
 			return c.JSON(http.StatusOK, data)
 		}
-		db.InsertRedis(shortUrl, longUrl)
+		InsertRedis(shortUrl, longUrl)
 	}
 
 	return c.Redirect(http.StatusMovedPermanently, longUrl)

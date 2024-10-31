@@ -1,16 +1,15 @@
-package db
+package url
 
 import (
 	"api/go_api/config"
 	"api/go_api/internal"
-	"api/go_api/model"
 	"time"
 )
 
-func Create(data *model.Url) (string, error) {
-	db := config.IDB()
+func Create(data *Url) (string, error) {
+	db := config.DB()
 	shortUrl := internal.MakeShortUrl()
-	url := &model.Url{
+	url := &Url{
 		ShortUrl: shortUrl,
 		LongUrl:  data.LongUrl,
 		IsEnable: data.IsEnable,
@@ -24,7 +23,7 @@ func Create(data *model.Url) (string, error) {
 }
 
 func Get(shortUrl string) (string, error) {
-	var url []*model.Url
+	var url []*Url
 	db := config.DB()
 	if res := db.Where("short_url = ?", shortUrl).Find(&url); res.Error != nil {
 		return "", res.Error

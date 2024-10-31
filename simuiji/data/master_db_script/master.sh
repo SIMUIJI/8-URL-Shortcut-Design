@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-cp /mnt/pg_hba.conf /var/lib/postgresql/data/pgdata/pg_hba.conf
-cp /mnt/postgresql.conf /var/lib/postgresql/data/pgdata/postgresql.conf
+#cp /mnt/pg_hba.conf /var/lib/postgresql/data/pgdata/pg_hba.conf
+#cp /mnt/postgresql.conf /var/lib/postgresql/data/pgdata/postgresql.conf
 
-psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
+PGPASSWORD=$POSTGRESQL_PASSWORD psql -v ON_ERROR_STOP=1 --username "$POSTGRESQL_USERNAME" --dbname "$POSTGRESQL_DATABASE" <<-EOSQL
 	CREATE TABLE url (
   short_url varchar NOT NULL,
   long_url varchar NOT NULL,
@@ -15,5 +15,4 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
   );
   CREATE INDEX idx_url_long_url ON url USING btree (long_url);
   CREATE INDEX idx_url_short_url ON url USING btree (short_url);
-  CREATE USER replication WITH REPLICATION LOGIN PASSWORD 'replica' CONNECTION LIMIT -1;
 EOSQL

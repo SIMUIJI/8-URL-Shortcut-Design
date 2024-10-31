@@ -2,8 +2,8 @@ package main
 
 import (
 	"api/go_api/cmd"
+	"api/go_api/cmd/myip"
 	_ "api/go_api/config"
-	"api/go_api/route"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -23,8 +23,8 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Route => handler
-	e.GET("/", cmd.MyIp)
-	route.UrlRoute(e)
+	e.GET("/", myip.MyIp)
+	cmd.UrlRoute(e)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
