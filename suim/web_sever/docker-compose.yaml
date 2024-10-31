@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  web1:
+    container_name: web1
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 3001:3000
+    networks:
+      - suimb1
+  web2:
+    container_name: web2
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 3002:3000
+    networks:
+      - suimb1
+  web3:
+    container_name: web3
+    build:
+      context: .
+      dockerfile: dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 3003:3000
+    networks:
+      - suimb1
+
+networks:
+  suimb1:
+    external: true
