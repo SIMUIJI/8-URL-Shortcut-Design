@@ -17,7 +17,7 @@ router = APIRouter(prefix="/url", tags=["URL"])
 async def get_url(short_url: str, rdb_session: PgpoolSssionDep, redis_session: SessionRedis):
     if url_cache_info := await redis_session.get(f"{short_url}"):
         url_cache_info = json.loads(url_cache_info)
-        return RedirectResponse(url_cache_info["long_url"], status_code=301)
+        return RedirectResponse(url_cache_info["long_url"], status_code=302)
     else:
         try:
             long_url = rdb_session.exec(select(UrlTable).where(UrlTable.short_url == short_url)).first().long_url

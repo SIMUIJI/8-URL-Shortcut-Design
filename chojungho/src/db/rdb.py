@@ -8,8 +8,8 @@ from sqlmodel import Session, SQLModel, create_engine
 load_dotenv()
 
 pg_engine = create_engine(
-    f"postgresql://{os.environ.get('PGPOOL_USER')}:"
-    f"{os.environ.get('PGPOOL_PASSWORD')}@"
+    f"postgresql://{os.environ.get('PGPOOL_POSTGRES_USERNAME')}:"
+    f"{os.environ.get('PGPOOL_POSTGRES_PASSWORD')}@"
     f"{os.environ.get('PGPOOL_HOST')}:"
     f"{os.environ.get('PGPOOL_PORT')}/"
     f"{os.environ.get('PGPOOL_NAME')}"
