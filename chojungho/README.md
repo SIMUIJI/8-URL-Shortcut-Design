@@ -41,7 +41,7 @@
 - 요청온 url에대해서 캐시를 해줘서 빠르게 url을 리다이렉트해준다.
 
 ## rdb
-- mastre, slave로 이중화를 해서 master에는 삽입,수정,삭제 작업만하고 일기 작업은 slave에서진행
+- mastre, slave로 이중화를 해서 master에는 삽입,수정,삭제 작업만하고 읽기 작업은 slave에서진행
 - master가 죽을시 slave가 승격하여 master역할까지함
 
 
