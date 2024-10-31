@@ -3,8 +3,11 @@ from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
+from dotenv import load_dotenv
 
 import models
+
+load_dotenv()
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -28,11 +31,11 @@ target_metadata = models.Base.metadata  # ORM 을 위한 모델 임포트 후 OR
 
 
 def get_url():
-    user = os.getenv("POSTGRES_USER", "postgres")
-    password = os.getenv("POSTGRES_PASSWORD", "suim")
-    server = os.getenv("POSTGRES_SERVER", "localhost")
-    port = os.getenv("POSTGRES_PORT", "54321")
-    db = os.getenv("POSTGRES_DB", "urldb")
+    server = os.getenv("POSTGRES_SERVER", "")
+    user = os.getenv("POSTGRES_USER", "")
+    password = os.getenv("POSTGRES_PASSWORD", "")
+    db = os.getenv("POSTGRES_DB", "")
+    port = os.getenv("POSTGRES_PORT", "")
     return f"postgresql+psycopg2://{user}:{password}@{server}:{port}/{db}?client_encoding=UTF-8"
 
 

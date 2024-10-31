@@ -1,8 +1,12 @@
+import os
 import secrets
 from typing import Any, Dict, List, Union
 
 from pydantic import AnyHttpUrl, PostgresDsn, validator
 from pydantic_settings import BaseSettings
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -21,11 +25,11 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str = "URL SHORTEN PAGE"
 
-    POSTGRES_SERVER: str = "192.168.184.1"
-    POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "suim"
-    POSTGRES_DB: str = "urldb"
-    POSTGRES_PORT: str = "54321"
+    POSTGRES_SERVER: str = os.getenv("POSTGRES_SERVER", "")
+    POSTGRES_USER: str = os.getenv("POSTGRES_USER", "")
+    POSTGRES_PASSWORD: str = os.getenv("POSTGRES_PASSWORD", "")
+    POSTGRES_DB: str = os.getenv("POSTGRES_DB", "")
+    POSTGRES_PORT: str = os.getenv("POSTGRES_PORT", "")
     POSTGRES_SCHEMA: str = "postgresql+psycopg2"
     SQLALCHEMY_DATABASE_URI: PostgresDsn | str = f"{POSTGRES_SCHEMA}://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}?client_encoding=UTF-8"
 

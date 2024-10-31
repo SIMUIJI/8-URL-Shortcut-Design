@@ -1,14 +1,19 @@
-version: "3"
+version: "3.8"
 
 services:
-  nginx:
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: dockerfile
+  db_ha:
+    container_name: postgres
+    image: postgres:latest
     ports:
-      - 80:80
+      - ${POSTGRES_BINDING_PORT}:${POSTGRES_PORT}
+    environment:
+      - POSTGRESQL_USERNAME=${POSTGRES_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRES_DB}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    networks:
+      - pg_bridge
 
 networks:
-  suimb1:
+  pg_bridge:
     external: true

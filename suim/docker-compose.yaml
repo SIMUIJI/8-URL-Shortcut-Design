@@ -1,0 +1,98 @@
+version: "3.8"
+
+services:
+  cache:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - ${REDIS_BINDING_PORT}:${REDIS_PORT}
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ${REDIS_DATA_PATH}:/data
+      - ${REDIS_DEFAULT_CONFIG_FILE}:/usr/local/etc/redis/redis.conf
+    networks:
+      - redis_bridge
+    restart: always
+
+  db_ha:
+    container_name: postgres
+    image: postgres:latest
+    ports:
+      - ${POSTGRES_BINDING_PORT}:${POSTGRES_PORT}
+    environment:
+      - POSTGRESQL_USERNAME=${POSTGRES_USER}
+      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRESQL_DATABASE=${POSTGRES_DB}
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - ${POSTGRES_SQL_FILE}:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - pg_bridge
+
+  load_balancer:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ${NGINX_DEFAULT_CONFIG_FILE}:/etc/nginx/nginx.conf
+    networks:
+      - nginx_bridge
+    restart: always
+
+  web_server_1:
+    container_name: web1
+    build:
+      context: ./web_server
+      dockerfile: dockerfile
+    ports:
+      - ${WEB_BINDING_PORT_1}:${WEB_PORT}
+    volumes:
+      - ${WEB_APP_PATH}:/app
+    depends_on:
+      - db_ha
+      - cache
+    networks:
+      - web_bridge
+    restart: always
+  web_server_2:
+    container_name: web2
+    build:
+      context: ./web_server
+      dockerfile: dockerfile
+    ports:
+      - ${WEB_BINDING_PORT_2}:${WEB_PORT}
+    volumes:
+      - ${WEB_APP_PATH}:/app
+    depends_on:
+      - db_ha
+      - cache
+    networks:
+      - web_bridge
+    restart: always
+  web_server_3:
+    container_name: web3
+    build:
+      context: ./web_server
+      dockerfile: dockerfile
+    ports:
+      - ${WEB_BINDING_PORT_3}:${WEB_PORT}
+    volumes:
+      - ${WEB_APP_PATH}:/app
+    depends_on:
+      - db_ha
+      - cache
+    networks:
+      - web_bridge
+    restart: always
+
+networks:
+  redis_bridge:
+    external: true
+  pg_bridge:
+    external: true
+  nginx_bridge:
+    external: true
+  web_bridge:
+    external: true
