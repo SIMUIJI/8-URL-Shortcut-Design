@@ -101,7 +101,7 @@ docker-compose --env-file ./data/.env -f .\api_compose.yml up --build -d
 ![Database](./images/db1.png)
 
 #### DB2
-![Database](./images/db1.png)
+![Database](./images/db2.png)
 
 #### Failover 시 마스터 승격
 ![Database](./images/failover.png)
