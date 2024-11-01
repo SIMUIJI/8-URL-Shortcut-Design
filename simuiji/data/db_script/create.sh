@@ -12,4 +12,5 @@ PGPASSWORD=$POSTGRESQL_PASSWORD psql -v ON_ERROR_STOP=1 --username "$POSTGRESQL_
   );
   CREATE INDEX idx_url_long_url ON url USING btree (long_url);
   CREATE INDEX idx_url_short_url ON url USING btree (short_url);
+  ALTER SEQUENCE url_url_id_seq restart with 1;
 EOSQL

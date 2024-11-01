@@ -1,38 +1,25 @@
 package internal
 
 import (
+	"api/config"
+	"context"
 	"fmt"
+	"log"
 	"net"
 	"os"
-	"strconv"
-	"strings"
-	"time"
 )
 
 func MakeShortUrl() string {
-	var ip string
-	epoch := time.Now().UnixNano()
-	strEpoch := strconv.FormatInt(epoch, 10)
-
-	addrs, err := net.InterfaceAddrs()
+	rdb := config.Cache()
+	cnt, err := rdb.Get(context.Background(), "counter").Int64()
 	if err != nil {
-		fmt.Println("Error:", err)
-		os.Exit(1)
+		log.Fatalf("Failed get counter: %v", err)
 	}
-
-	fmt.Println("Local IP addresses:")
-	for _, addr := range addrs {
-		// IPv4 주소만 필터링
-		if ipNet, ok := addr.(*net.IPNet); ok && !ipNet.IP.IsLoopback() {
-			if ipNet.IP.To4() != nil {
-				ip = strings.ReplaceAll(ipNet.IP.String(), ".", "")
-				break
-			}
-		}
+	_, err = rdb.Incr(context.Background(), "counter").Result()
+	if err != nil {
+		log.Fatalf("Failed to increment key: %v", err)
 	}
-	rawId := ip + strEpoch
-	id, err := strconv.Atoi(rawId)
-	return Base62Encode(id)
+	return encodeBase62(cnt)
 }
 
 func MyIP() []string {

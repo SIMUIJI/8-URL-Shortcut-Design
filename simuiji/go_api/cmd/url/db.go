@@ -3,27 +3,36 @@ package url
 import (
 	"api/config"
 	"api/internal"
+	"api/model"
 	"time"
 )
 
-func Create(data *Url) (string, error) {
+func Create(data *model.Url) (string, error) {
 	db := config.DB()
-	shortUrl := internal.MakeShortUrl()
-	url := &Url{
-		ShortUrl: shortUrl,
-		LongUrl:  data.LongUrl,
-		IsEnable: data.IsEnable,
-		RegDate:  time.Now(),
+	url := &model.Url{}
+
+	if res := db.Where("long_url = ?", data.LongUrl).Find(url); res.Error != nil {
+		return "", res.Error
 	}
-	if err := db.Create(&url).Error; err != nil {
-		return "", err
+	if url.UrlId == 0 {
+		ShortUrl := internal.MakeShortUrl()
+		url = &model.Url{
+			ShortUrl: ShortUrl,
+			LongUrl:  data.LongUrl,
+			IsEnable: 1,
+			RegDate:  time.Now(),
+		}
+		if err := db.Create(&url).Error; err != nil {
+			return "", err
+		}
+		InsertRedis(ShortUrl, data.LongUrl)
 	}
 
-	return shortUrl, nil
+	return url.ShortUrl, nil
 }
 
 func Get(shortUrl string) (string, error) {
-	var url []*Url
+	var url []*model.Url
 	db := config.DB()
 	if res := db.Where("short_url = ?", shortUrl).Find(&url); res.Error != nil {
 		return "", res.Error
