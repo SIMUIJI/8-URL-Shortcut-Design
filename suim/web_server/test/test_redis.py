@@ -11,7 +11,7 @@ def test_get_cache():
 
 
 def test_main():
-    r = redis.Redis.from_url(url="redis://default:suim@localhost:63791/0")
+    r = redis.Redis.from_url(url="redis://default:password@localhost:6379/0")
     print(r.ping())
     rs = r.get("c45fefb4")
     if not rs:

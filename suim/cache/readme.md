@@ -1,31 +1,68 @@
-# Redis로 캐시 서버 만들기
+# Cache Server Using Redis
+
+## File Structure
+
+<pre>
+├── .env
+├── docker-compose.yml
+└── redis.conf
+</pre>
 
 ## <code>.env</code>
 
-- Docker Container 생성 시 참고되는 환경 설정 파일
-- 현재 디렉토리에 파일 생성
+- Environment configuration file.
 
 ```.env
 # Docker setting
-COMPOSE_PROJECT_NAME=
+COMPOSE_PROJECT_NAME=redis-test
 
 # Docker volume setting
-REDIS_DATA_PATH=
-REDIS_DEFAULT_CONFIG_FILE=
+REDIS_DATA_PATH=./data
+REDIS_DEFAULT_CONFIG_FILE=redis.conf
 
 # etc setting
-REDIS_BINDING_PORT=
-REDIS_PORT=
+REDIS_BINDING_PORT=6379
+REDIS_PORT=6379
+```
+
+## <code>docker-compose.yml</code>
+
+```docker-compose.yml
+version: "3.8"
+
+services:
+  cache:
+    container_name: redis
+    image: redis:latest
+    env_file: .env
+    ports:
+      - ${REDIS_BINDING_PORT}:${REDIS_PORT}
+    command: redis-server /usr/local/etc/redis/redis.conf
+    volumes:
+      - ${REDIS_DATA_PATH}:/data
+      - ${REDIS_DEFAULT_CONFIG_FILE}:/usr/local/etc/redis/redis.conf
+    networks:
+      - redis_bridge
+    restart: always
+
+networks:
+  redis_bridge:
+    external: true
 ```
 
 ## <code>redis.conf</code>
 
-- Redis 설정파일
-- <code>bind 0.0.0.0</code> 으로 설정하면 외부 IP로 Redis 접속 가능
-- <code>requirepass foobared</code> 라인에 비밀 번호 설정 필요 
+- Redis configuration file.
+- <code>bind</code> option allow remote access.
+  - <code>bind 127.0.0.1</code>: Only local IP
+  - <code>bind 0.0.0.0</code>: All IP
+- <code>requirepass</code> option set password.
+- <code>protected-mode</code> option executed without any password required to access it.
 
-## 실행 
+## Run 
 
 ```bash
-docker compose up -d
+docker network create redis_bridge
+docker compose config
+docker compose up
 ```

@@ -1,9 +1,10 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  redis:
+  cache:
     container_name: redis
     image: redis:latest
+    env_file: .env
     ports:
       - ${REDIS_BINDING_PORT}:${REDIS_PORT}
     command: redis-server /usr/local/etc/redis/redis.conf

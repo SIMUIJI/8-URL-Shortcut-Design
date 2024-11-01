@@ -21,5 +21,5 @@ app.include_router(url_router.router)
 
 """
 FastAPI 실행 명령어
-uvicorn main:app  --host 192.168.184.1 --reload
+uvicorn main:app --host 192.168.184.1 --reload
 """

@@ -44,12 +44,12 @@ services:
   web_server_1:
     container_name: web1
     build:
-      context: ./web_server
+      context: ${WEB_WORKDIR}
       dockerfile: dockerfile
     ports:
       - ${WEB_BINDING_PORT_1}:${WEB_PORT}
     volumes:
-      - ${WEB_APP_PATH}:/app
+      - ${WEB_WORKDIR}:/app
     depends_on:
       - db_ha
       - cache
@@ -59,12 +59,12 @@ services:
   web_server_2:
     container_name: web2
     build:
-      context: ./web_server
+      context: ${WEB_WORKDIR}
       dockerfile: dockerfile
     ports:
       - ${WEB_BINDING_PORT_2}:${WEB_PORT}
     volumes:
-      - ${WEB_APP_PATH}:/app
+      - ${WEB_WORKDIR}:/app
     depends_on:
       - db_ha
       - cache
@@ -74,12 +74,12 @@ services:
   web_server_3:
     container_name: web3
     build:
-      context: ./web_server
+      context: ${WEB_WORKDIR}
       dockerfile: dockerfile
     ports:
       - ${WEB_BINDING_PORT_3}:${WEB_PORT}
     volumes:
-      - ${WEB_APP_PATH}:/app
+      - ${WEB_WORKDIR}:/app
     depends_on:
       - db_ha
       - cache
@@ -89,10 +89,14 @@ services:
 
 networks:
   redis_bridge:
+    driver: custom-driver
     external: true
   pg_bridge:
+    driver: custom-driver
     external: true
   nginx_bridge:
+    driver: custom-driver
     external: true
   web_bridge:
+    driver: custom-driver
     external: true

@@ -46,9 +46,9 @@ class Settings(BaseSettings):
             path=f"/{values.get('POSTGRES_DB') or ''}",
         )
 
-    REDIS_SERVER: str = "192.168.184.1"
-    REDIS_PASSWORD: str = "suim"
-    REDIS_PORT: str = "63791"
+    REDIS_SERVER: str = os.getenv("REDIS_SERVER", "")
+    REDIS_PASSWORD: str = os.getenv("REDIS_PASSWORD", "")
+    REDIS_PORT: str = os.getenv("REDIS_PORT", "")
     CACHE_URI: str = f"redis://default:{REDIS_PASSWORD}@{REDIS_SERVER}:{REDIS_PORT}/0"
 
 

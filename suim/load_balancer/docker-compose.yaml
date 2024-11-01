@@ -4,15 +4,16 @@ services:
   nginx:
     container_name: nginx
     image: nginx:latest
+    env_file: .env
     ports:
       - 80:80
-    build:
-      context: .
-      dockerfile: dockerfile
+      - 443:443
+    volumes:
+      - ${NGINX_DEFAULT_CONFIG_FILE}:/etc/nginx/nginx.conf
     networks:
-      - suimb1
+      - nginx_bridge
     restart: always
 
 networks:
-  suimb1:
+  nginx_bridge:
     external: true

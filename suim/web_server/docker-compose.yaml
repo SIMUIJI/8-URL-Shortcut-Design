@@ -1,40 +1,43 @@
-version: "3"
+version: "3.8"
 
 services:
-  web1:
+  web_server_1:
     container_name: web1
     build:
-      context: .
+      context: ${WEB_WORKDIR}
       dockerfile: dockerfile
-    volumes:
-      - .:/app
     ports:
-      - 3001:3000
+      - ${WEB_BINDING_PORT_1}:${WEB_PORT}
+    volumes:
+      - ${WEB_WORKDIR}:/app
     networks:
-      - suimb1
-  web2:
+      - web_bridge
+    restart: always
+  web_server_2:
     container_name: web2
     build:
-      context: .
+      context: ${WEB_WORKDIR}
       dockerfile: dockerfile
-    volumes:
-      - .:/app
     ports:
-      - 3002:3000
+      - ${WEB_BINDING_PORT_2}:${WEB_PORT}
+    volumes:
+      - ${WEB_WORKDIR}:/app
     networks:
-      - suimb1
-  web3:
+      - web_bridge
+    restart: always
+  web_server_3:
     container_name: web3
     build:
-      context: .
+      context: ${WEB_WORKDIR}
       dockerfile: dockerfile
-    volumes:
-      - .:/app
     ports:
-      - 3003:3000
+      - ${WEB_BINDING_PORT_3}:${WEB_PORT}
+    volumes:
+      - ${WEB_WORKDIR}:/app
     networks:
-      - suimb1
+      - web_bridge
+    restart: always
 
 networks:
-  suimb1:
+  web_bridge:
     external: true
