@@ -1,8 +1,8 @@
 package url
 
 import (
-	"api/go_api/config"
-	"api/go_api/internal"
+	"api/config"
+	"api/internal"
 	"time"
 )
 

@@ -1,18 +1,11 @@
 package main
 
 import (
-	"api/go_api/cmd"
-	"api/go_api/cmd/myip"
-	_ "api/go_api/config"
+	"api/cmd"
+	"api/cmd/myip"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
-
-//env GOOS=linux GOARCH=arm64 go build -o main
-//env GOOS=linux GOARCH=amd64 go build -o main
-//set GOOS=linux& set GOARCH=amd64& go build -o main
-//cp main ../api1/
-//cp main ../api2/
 
 func main() {
 	// Echo instance

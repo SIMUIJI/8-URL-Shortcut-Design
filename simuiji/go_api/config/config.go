@@ -5,6 +5,7 @@ import (
 	"github.com/redis/go-redis/v9"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"os"
 )
 
 var database *gorm.DB
@@ -18,14 +19,14 @@ func init() {
 }
 
 func DatabaseInit() {
-	host := "172.19.0.6"
-	user := "snj"
-	password := "snj"
-	dbName := "snj_db"
-	port := 5432
+	host := os.Getenv("DB_HOST")
+	user := os.Getenv("DB_USER")
+	password := os.Getenv("DB_PASSWORD")
+	dbName := os.Getenv("DB_NAME")
+	port := os.Getenv("DB_PORT")
 
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta", host, user, password, dbName, port)
-	database, e = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	connectInfo := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable TimeZone=Asia/Jakarta", host, user, password, dbName, port)
+	database, e = gorm.Open(postgres.Open(connectInfo), &gorm.Config{})
 
 	if e != nil {
 		panic(e)
@@ -33,9 +34,10 @@ func DatabaseInit() {
 }
 
 func CacheInit() {
+	connectInfo := fmt.Sprintf("%s:%d", os.Getenv("REDIS_HOST"), os.Getenv("REDIS_PORT"))
 	cache = redis.NewClient(&redis.Options{
-		Addr:     "172.19.0.7:6379", // Redis 서버 주소
-		Password: "snj",             // 비밀번호가 없다면 빈 문자열
+		Addr:     connectInfo,                 // Redis 서버 주소
+		Password: os.Getenv("REDIS_PASSWORD"), // 비밀번호가 없다면 빈 문자열
 	})
 
 }

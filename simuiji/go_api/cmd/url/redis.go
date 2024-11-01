@@ -1,7 +1,7 @@
 package url
 
 import (
-	"api/go_api/config"
+	"api/config"
 	"context"
 	"fmt"
 )

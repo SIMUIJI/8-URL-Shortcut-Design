@@ -1,7 +1,7 @@
 package myip
 
 import (
-	"api/go_api/internal"
+	"api/internal"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strings"

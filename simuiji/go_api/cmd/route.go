@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"api/go_api/cmd/url"
+	"api/cmd/url"
 	"github.com/labstack/echo/v4"
 )
 
