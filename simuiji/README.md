@@ -73,6 +73,13 @@
 - api 바이너리는 docker bulider 를 이용하여 빌드후 이미지에서 실행
 - hash 충돌 전략은 redis에 key를 등록해 해당 키를 incresment 하여 진행, 또한 디비에 해당 id(serial) 값을 넣음 => base62 encode 로 진행 => redis 에서 값을 가져와서 겹칠가능성 매우 적음 => cache 서버가 재 실행 된 경우에는 db 에서 serial 키를 가져와서 재세팅
 
+## 실행 방법
+```
+docker network create --gateway 172.19.0.1 --subnet 172.19.0.0/21 myapi
+docker-compose --env-file ./data/db.env -f .\db_compose.yml up -d
+docker-compose --env-file ./data/.env -f .\api_compose.yml up --build -d
+```
+
 ---
 
 # Result
