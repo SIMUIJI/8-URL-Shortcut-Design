@@ -17,8 +17,8 @@ services: # 도커에서 사용하는 컨테이너를 정의
 
   app1:
     build:
-      context: ./go_api
-      dockerfile: ./Dockerfile
+      context: go_api
+      dockerfile: go_api/Dockerfile
     restart: always # 언제 재 실행을 시켜줄것에 대한 값이다.
     environment:
       - DB_HOST=${PGPOOL_HOST}
@@ -35,8 +35,8 @@ services: # 도커에서 사용하는 컨테이너를 정의
 
   app2:
     build:
-      context: ./go_api
-      dockerfile: ./Dockerfile
+      context: go_api
+      dockerfile: go_api/Dockerfile
     restart: always # 언제 재 실행을 시켜줄것에 대한 값이다.
     environment:
       - DB_HOST=${PGPOOL_HOST}

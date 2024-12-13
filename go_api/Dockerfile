@@ -5,7 +5,7 @@ FROM golang:1.23 AS builder
 WORKDIR /app
 
 # Copy Go source files
-COPY .. .
+COPY ../simuiji .
 
 # Build the Go binary
 RUN go mod tidy && CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-s' -o main .

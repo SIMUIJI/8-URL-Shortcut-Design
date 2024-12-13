@@ -1,88 +1,110 @@
-# 8-URL Shortcut Design
-
-## 주요기능
-
-1. url단축 : 주어진 긴 url을 훨씬 짧게 줄인다.
-2. url 리디렉션 : 축약된 url로 http 요청이 오면 원래 url로 안내
-3. 높은 가용성가 규모 학장성, 그리고 장애 감내 요구
----
-
-## 제한사항
-
-1. 단축 url은 숫자 0부터9까지와 영문자 a부터z, A부터Z 만 사용할수 있다.
-2. 시스템을 단순화 하기 위해 삭제나 갱신은 할수없다고 가정한다
+# [가상 면접 사례로 배우는 대규모 시스템 설계 기초](https://www.yes24.com/Product/Goods/102819435)
+저자: 알렉스쉬
 
 ---
+
+# 8장 URL 단축기 설계
+
+## 기본 기능
+
+- URL 단축
+- URL 리디렉션
+- 높은 가용성 및 규모 확장성 그리고 장애 감내
+
+## 개략적 추정
+
+- 쓰기 연산: 매일 1억 개의 단축 URL 생성
+- 초당 쓰기 연산 1억/24/3600 = 1160
+- 읽기 연산: 초당 11,600회
+- 10년간 보관 가능한 레코드 개수는 1억*365*10 = 3650억
+- 10년간 필요한 저장 용량은 URL 평균 길이가 100일 때 365 Billion*100Byte = 36.5TB
 
 ## API 엔드포인트
 
-**API 통신 형식**
+- URL 단축 엔드포인트
+    - Parameter ⇒ 단축할 URL
+    - Method ⇒ POST
+    - URL ⇒ /api/v1/data/shorten
+    - Response ⇒ 단축 URL
+- URL 리디렉션 엔드포인트
+    - Parameter ⇒ 단축 URL
+    - Method ⇒ GET
+    - URL ⇒ /api/v1/shortUrl
+    - Response ⇒ 리디렉션될 URL
 
-- RESTful API
+## URL 리디렉션
+- 301 Permanently Moved
+    - Location 헤더에 반환된 URL로 이전
+    - 캐시된 응답
+- 302 Found
+    - Location 헤더가 지정하는 URL에 의해 처리
+    - 원래 서버로 리디렉션
 
-**통신 메서드**
+## URL 단축 플로
+- 긴 URL과 해시값은 1대1 매핑
+- 변환 및 복원이 가능해야 함
 
-- GET /api/v1/shortUrl
-    - 인자 : {longUrl : longURLstring}
-    - 반환 : 단축 URL
-- POST /api/v1/shorten
-    - 반환 : HTTP 리디렉션 목저지가 될 원래 URL
+## 데이터 모델
 
-**상태코드**
+- 관계형 DB에 아래와 같이 저장
+    - 테이블명: `url`
+    - 컬럼: `url_id`(PK), `short_url`, `long_url`
 
-- 301 or 302 중에 더적합하다고 생각한걸 조사후 사용하기
+## 해시 함수
 
----
+- 해시값은 총 62개(`[0-9a-zA-Z]`)로 62^7=3.5조개의 URL을 만들 수 있으므로 7자리의 수로 만듦
+- 해시 함수 구현은 2가지 방법이 있음
+- 해시 후 충돌 해소 방법은 CRC32, MD5, SHA-1 등의 해시 함수로 축약하여 사용
+- base-62 변환 방법은 10진수 ID를 62진수로 변환하여 62개의 해시 문자와 매핑
 
-## 스키마
+  | **해시 후 충돌 전략** | **base-62 변환** | 
+  |----------------|----------------|
+  | 단축 URL의 길이 고정  | 단축 URL 길이는 가변적 |
+  | ID 생성기 필요없음    | ID 생성기 필요(유일성) |
+  | 충돌 해소 필요       | 보안상 문제         |
 
-**CREATE** **TABLE** url (
+## 상세 설계
 
-short_url **varchar** **NOT** **NULL**,
+- 초당 1억개의 쓰기가 발생했다고 가정 했을때 api 서버를 2대 이상, db는 HA 구성을 하여 안정성을 높임
+- DB 오버헤드를 방지하기 위해 cache 서버를 구현
+- loadbalance 를 구축하여 api 서버에 부하분산이 되게 구성
+- DB를 master_db, slave_db 를 구성, pgpool을 이용하여 failover 시 자동 master 승격 환경 구축
+- api 는 go 의 echo 를 사용
+- api 바이너리는 docker bulider 를 이용하여 빌드후 이미지에서 실행
+- hash 충돌 전략은 redis에 key를 등록해 해당 키를 incresment 하여 진행, 또한 디비에 해당 id(serial) 값을 넣음 => base62 encode 로 진행 => redis 에서 값을 가져와서 겹칠가능성 매우 적음 => cache 서버가 재 실행 된 경우에는 db 에서 serial 키를 가져와서 재세팅
 
-long_url **varchar** **NOT** **NULL**,
-
-is_enable **int4** **NOT** **NULL**,
-
-reg_date **timestamp** **NOT** **NULL**,
-
-url_id serial4 **NOT** **NULL**,
-
-**CONSTRAINT** url_pkey **PRIMARY** **KEY** (url_id)
-
-);
-
-**CREATE** **INDEX** idx_url_long_url **ON** url **USING** btree (long_url);
-
-**CREATE** **INDEX** idx_url_short_url **ON** url **USING** btree (short_url);
-
----
-
-## url 단축 기법
-
-- hash value 길이는 7로
-- 해시 후 충돌 해소전략 or base62변환 방법중 하나 선택하여 진행
-### 해시 후 충돌 해소전략
-- CRC32, MD5, SHA-1 등 해시함수적용후 앞7자리만 저장한다 만약 충돌시 사전에 입력한 문자열을 더해서 저장한다
-### base62변환 전략
-- url을 유일생성ID로 변환한뒤 base62를 이용하여 인코딩해준다 예를들어 https://en.wikipedia.org/wiki/Systems_design 이라고 url이 있으면 유일 ID생성기로 반환하면 2009215674938이 되겠고 base62로 변환하면 zn9edcu가 된다.
-
----
-
-## 아키텍처
-
-![image](https://github.com/user-attachments/assets/57d4da31-ced4-4044-b6ec-189df523c21d)
-
-요청 → 로드밸런서 → 캐시 or 데이터베이스 와같은 아키텍처로 구성한다
-
-웹서버는 2개이상, 데이터베이스는 master, slave로 구성을한다.
+## 실행 방법
+```
+docker network create --gateway 172.19.0.1 --subnet 172.19.0.0/21 myapi
+docker-compose --env-file ./data/db.env -f .\db_compose.yml up -d
+docker-compose --env-file ./data/.env -f .\api_compose.yml up --build -d
+```
 
 ---
 
-## 최종흐름
+# Result
 
-1. 사용자가 단축 url 클릭
-2. 로드밸랜서가 해당 클릭으로 발생한 요청을 웹 서버에 전달
-3. 단축 url이 이미 캐시에 있으면 원래 url을 꺼내서 클라이언트에 전달
-4. 캐시에 해당 단축 url이 없으면 데이터베이스에서 깨낸다. 데이터베이스에 없다면 아마 사용자가 잘못된 단축 url을 입력한 경우일 것이다.
-5. 데이터 베이스에서 꺼낸 url을 캐시에 넣은 후 사용자에게 반환한다.
+## URL Shortcut Architecture
+
+![URL Shortcut Architecture](imagesrc.png)
+
+### Load Balance
+
+![Load Balance](imagesoad.png)
+
+## Database and Cache
+
+#### PGPOOL
+![Database](imagesgpool.png)
+
+#### DB1
+![Database](imagesb1.png)
+
+#### DB2
+![Database](imagesb2.png)
+
+#### Failover 시 마스터 승격
+![Database](imagesailover.png)
+
+#### Cache
+![Cache](imagesache.png)
