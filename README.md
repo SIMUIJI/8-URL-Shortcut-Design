@@ -86,25 +86,25 @@ docker-compose --env-file ./data/.env -f .\api_compose.yml up --build -d
 
 ## URL Shortcut Architecture
 
-![URL Shortcut Architecture](imagesrc.png)
+![URL Shortcut Architecture](./images/arc.png)
 
 ### Load Balance
 
-![Load Balance](imagesoad.png)
+![Load Balance](./images/load.pngoad.png)
 
 ## Database and Cache
 
 #### PGPOOL
-![Database](imagesgpool.png)
+![Database](images/pgpool.png)
 
 #### DB1
-![Database](imagesb1.png)
+![Database](images/db1.png)
 
 #### DB2
-![Database](imagesb2.png)
+![Database](images/db2.png)
 
 #### Failover 시 마스터 승격
-![Database](imagesailover.png)
+![Database](images/failover.png)
 
 #### Cache
-![Cache](imagesache.png)
+![Cache](images/cache.png)
