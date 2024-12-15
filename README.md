@@ -90,7 +90,7 @@ docker-compose --env-file ./data/.env -f .\api_compose.yml up --build -d
 
 ### Load Balance
 
-![Load Balance](./images/load.pngoad.png)
+![Load Balance](./images/load.png)
 
 ## Database and Cache
 
